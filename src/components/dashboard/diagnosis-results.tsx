@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { IcdCodeResults, DiagnosisFormValues } from "@/lib/types";
-import { Download, UploadCloud, ClipboardCopy } from "lucide-react";
+import { Download, UploadCloud, ClipboardCopy, FileText, Stethoscope } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 interface DiagnosisResultsProps {
@@ -95,18 +95,31 @@ ${results.therapeuticRecommendations}
   return (
     <Card className="animate-in fade-in-50">
       <CardHeader>
-        <div className="space-y-4 rounded-lg border bg-secondary/30 p-4">
-            <div className="grid grid-cols-1 gap-x-4 gap-y-2 sm:grid-cols-2">
-                <InfoItem label="Original Diagnosis" value={results.originalDiagnosis} />
-                <InfoItem label="System" value={query.medicalSystem} />
-                <InfoItem label="ICD Name" value={results.mmsDescription} />
-                <InfoItem label="ICD Code" value={results.mmsCode} />
-                <InfoItem label="TM2 Name" value={results.tm2Description} />
-                <InfoItem label="TM2 Code" value={results.tm2Code} />
+        <div className="flex items-center gap-4">
+            <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
+                <FileText className="h-6 w-6 text-primary" />
+            </div>
+            <div>
+                <CardTitle className="text-2xl">{results.originalDiagnosis}</CardTitle>
+                <CardDescription>Mapping results for Patient ID: {query.patientId} ({query.medicalSystem})</CardDescription>
             </div>
         </div>
       </CardHeader>
       <CardContent className="space-y-6">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <CodeCard 
+                title="ICD-11 MMS" 
+                description={results.mmsDescription} 
+                code={results.mmsCode} 
+                onCopy={() => handleCopyToClipboard(results.mmsCode, 'ICD-11 Code')}
+            />
+            <CodeCard 
+                title="ICD-11 TM2" 
+                description={results.tm2Description} 
+                code={results.tm2Code}
+                onCopy={() => handleCopyToClipboard(results.tm2Code, 'TM2 Code')}
+            />
+        </div>
         
         <Tabs defaultValue="description">
           <TabsList className="grid w-full grid-cols-2">
@@ -114,9 +127,9 @@ ${results.therapeuticRecommendations}
             <TabsTrigger value="recommendations">Recommendations</TabsTrigger>
           </TabsList>
           <TabsContent value="description" className="mt-4 space-y-4">
-            <InfoCard title="Early Stage" content={results.conditionDescriptionEarlyStage} />
-            <InfoCard title="Intermediate Stage" content={results.conditionDescriptionIntermediateStage} />
-            <InfoCard title="Advanced Stage" content={results.conditionDescriptionAdvancedStage} />
+            <InfoCard title="Early Stage" content={results.conditionDescriptionEarlyStage} icon={<Stethoscope className="h-5 w-5" />} />
+            <InfoCard title="Intermediate Stage" content={results.conditionDescriptionIntermediateStage} icon={<Stethoscope className="h-5 w-5" />} />
+            <InfoCard title="Advanced Stage" content={results.conditionDescriptionAdvancedStage} icon={<Stethoscope className="h-5 w-5" />} />
           </TabsContent>
           <TabsContent value="recommendations" className="mt-4 space-y-4">
             <InfoCard title="Lifestyle Recommendations" content={results.lifestyleRecommendations} />
@@ -140,19 +153,32 @@ ${results.therapeuticRecommendations}
   );
 }
 
-function InfoItem({ label, value }: { label: string; value: string }) {
+function CodeCard({ title, description, code, onCopy }: { title: string; description: string, code: string, onCopy: () => void }) {
     return (
-      <div>
-        <p className="text-sm font-medium text-muted-foreground">{label}</p>
-        <p className="font-semibold">{value}</p>
-      </div>
-    );
+        <Card className="bg-secondary/30">
+            <CardHeader>
+                <CardTitle className="text-lg">{title}</CardTitle>
+                <CardDescription>{description}</CardDescription>
+            </CardHeader>
+            <CardContent>
+                <div className="flex items-center justify-between rounded-md bg-background p-3">
+                    <Badge variant="outline" className="text-base font-semibold">
+                        {code}
+                    </Badge>
+                    <Button variant="ghost" size="icon" className="h-8 w-8" onClick={onCopy}>
+                        <ClipboardCopy className="h-4 w-4" />
+                    </Button>
+                </div>
+            </CardContent>
+        </Card>
+    )
 }
 
-function InfoCard({ title, content }: { title: string, content: string }) {
+function InfoCard({ title, content, icon }: { title: string, content: string, icon?: React.ReactNode }) {
     return (
         <Card>
-            <CardHeader>
+            <CardHeader className="flex flex-row items-center gap-4 space-y-0">
+                {icon && <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary">{icon}</div>}
                 <CardTitle className="text-lg">{title}</CardTitle>
             </CardHeader>
             <CardContent>
