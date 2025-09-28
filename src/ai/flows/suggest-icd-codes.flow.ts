@@ -46,7 +46,6 @@ const suggestIcdCodesPrompt = ai.definePrompt({
 
   Medical System: {{{medicalSystem}}}
   Diagnosis: {{{diagnosis}}}
-  Patient ID: {{{patientId}}}
 
   Analyze the diagnosis and provide the following:
   - The original diagnosis in the 'originalDiagnosis' field.
