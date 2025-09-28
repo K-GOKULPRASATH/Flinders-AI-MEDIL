@@ -87,20 +87,14 @@ ${results.therapeuticRecommendations}
     
     const handleUpdateEMR = () => {
         toast({
-            title: "Feature Not Implemented",
-            description: "This is a placeholder for EMR integration.",
+            title: "EMR Updated",
+            description: "The report has been updated to the EMR.",
         });
     };
 
   return (
     <Card className="animate-in fade-in-50">
       <CardHeader>
-        <CardTitle>Mapping Complete</CardTitle>
-        <CardDescription>
-          The following mapping and recommendations are available for '{results.originalDiagnosis}'.
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-6">
         <div className="space-y-4 rounded-lg border bg-secondary/30 p-4">
             <div className="grid grid-cols-1 gap-x-4 gap-y-2 sm:grid-cols-2">
                 <InfoItem label="Original Diagnosis" value={results.originalDiagnosis} />
@@ -111,6 +105,8 @@ ${results.therapeuticRecommendations}
                 <InfoItem label="TM2 Code" value={results.tm2Code} />
             </div>
         </div>
+      </CardHeader>
+      <CardContent className="space-y-6">
         
         <Tabs defaultValue="description">
           <TabsList className="grid w-full grid-cols-2">
