@@ -101,14 +101,16 @@ ${results.therapeuticRecommendations}
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
-        <div className="space-y-4">
-            <h3 className="font-semibold">Suggested Codes</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <CodeCard title="ICD Name (ICD-11 MMS)" code={results.mmsCode} description={results.mmsDescription} onCopy={handleCopyToClipboard} />
-                <CodeCard title="TM2 Name (ICD-11 TM2)" code={results.tm2Code} description={results.tm2Description} onCopy={handleCopyToClipboard} />
+        <div className="space-y-4 rounded-lg border bg-secondary/30 p-4">
+            <div className="grid grid-cols-1 gap-x-4 gap-y-2 sm:grid-cols-2">
+                <InfoItem label="Original Diagnosis" value={results.originalDiagnosis} />
+                <InfoItem label="System" value={query.medicalSystem} />
+                <InfoItem label="ICD Name" value={results.mmsDescription} />
+                <InfoItem label="ICD Code" value={results.mmsCode} />
+                <InfoItem label="TM2 Name" value={results.tm2Description} />
+                <InfoItem label="TM2 Code" value={results.tm2Code} />
             </div>
         </div>
-        <Separator />
         
         <Tabs defaultValue="description">
           <TabsList className="grid w-full grid-cols-2">
@@ -142,23 +144,13 @@ ${results.therapeuticRecommendations}
   );
 }
 
-function CodeCard({ title, code, description, onCopy }: { title: string, code: string, description: string, onCopy: (text: string, label: string) => void }) {
+function InfoItem({ label, value }: { label: string; value: string }) {
     return (
-        <Card className="bg-secondary/50">
-            <CardHeader className="pb-2">
-                <div className="flex items-center justify-between">
-                    <CardTitle className="text-base">{title}</CardTitle>
-                    <Button variant="ghost" size="icon" className="h-7 w-7" onClick={() => onCopy(`${code} - ${description}`, title)}>
-                        <ClipboardCopy className="h-4 w-4" />
-                    </Button>
-                </div>
-            </CardHeader>
-            <CardContent>
-                <Badge variant="default" className="text-sm font-mono mb-2">{code}</Badge>
-                <p className="text-sm text-muted-foreground">{description}</p>
-            </CardContent>
-        </Card>
-    )
+      <div>
+        <p className="text-sm font-medium text-muted-foreground">{label}</p>
+        <p className="font-semibold">{value}</p>
+      </div>
+    );
 }
 
 function InfoCard({ title, content }: { title: string, content: string }) {
