@@ -16,6 +16,7 @@ const SuggestDiagnosesInputSchema = z.object({
   partialDiagnosis: z
     .string()
     .describe('The partial diagnosis entered by the user.'),
+  medicalSystem: z.string().describe('The medical system (Ayurveda, Unani, Siddha, ICD).'),
 });
 export type SuggestDiagnosesInput = z.infer<typeof SuggestDiagnosesInputSchema>;
 
@@ -34,8 +35,10 @@ const prompt = ai.definePrompt({
   name: 'suggestDiagnosesPrompt',
   input: {schema: SuggestDiagnosesInputSchema},
   output: {schema: SuggestDiagnosesOutputSchema},
-  prompt: `You are a medical terminology expert. Suggest a list of diagnoses that are relevant to the user's partial input.
+  prompt: `You are an expert in medical terminology, specializing in Ayurveda, Unani, and Siddha systems of medicine, as well as modern ICD-11 classifications.
+Based on the user's partial input for a diagnosis and the specified medical system, provide a list of relevant and accurate terminological suggestions.
 
+Medical System: {{{medicalSystem}}}
 Partial Diagnosis: {{{partialDiagnosis}}}
 
 Suggestions:`,

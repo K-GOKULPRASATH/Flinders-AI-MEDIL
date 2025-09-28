@@ -5,7 +5,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "MediLexicon Assistant",
-  description: "An AI-powered smart code mapping assistant for traditional and modern medicine.",
+  description: "A smart code mapping assistant for traditional and modern medicine.",
 };
 
 export default function RootLayout({

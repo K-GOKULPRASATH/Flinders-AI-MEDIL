@@ -34,11 +34,11 @@ Date: ${new Date().toLocaleString()}
 --- ORIGINAL QUERY ---
 Patient ID:     ${query.patientId}
 Medical System: ${query.medicalSystem}
-Diagnosis:      ${query.diagnosis}
+Original Diagnosis: ${results.originalDiagnosis}
 
 --- SUGGESTED CODES ---
-ICD-11 MMS: ${results.mmsCode} - ${results.mmsDescription}
-ICD-11 TM2: ${results.tm2Code} - ${results.tm2Description}
+ICD-11 MMS (ICD Name): ${results.mmsCode} - ${results.mmsDescription}
+ICD-11 TM2 (TM2 Name):  ${results.tm2Code} - ${results.tm2Description}
 
 --- CONDITION DESCRIPTION ---
 Early Stage:
@@ -97,15 +97,15 @@ ${results.therapeuticRecommendations}
       <CardHeader>
         <CardTitle>Mapping Complete</CardTitle>
         <CardDescription>
-          AI has generated the following mapping and recommendations for '{query.diagnosis}'.
+          The following mapping and recommendations are available for '{results.originalDiagnosis}'.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="space-y-4">
             <h3 className="font-semibold">Suggested Codes</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <CodeCard title="ICD-11 MMS" code={results.mmsCode} description={results.mmsDescription} onCopy={handleCopyToClipboard} />
-                <CodeCard title="ICD-11 TM2" code={results.tm2Code} description={results.tm2Description} onCopy={handleCopyToClipboard} />
+                <CodeCard title="ICD Name (ICD-11 MMS)" code={results.mmsCode} description={results.mmsDescription} onCopy={handleCopyToClipboard} />
+                <CodeCard title="TM2 Name (ICD-11 TM2)" code={results.tm2Code} description={results.tm2Description} onCopy={handleCopyToClipboard} />
             </div>
         </div>
         <Separator />

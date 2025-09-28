@@ -64,13 +64,14 @@ export function DiagnosisForm({ onSubmit, isSubmitting }: DiagnosisFormProps) {
   });
 
   const diagnosisValue = form.watch("diagnosis");
+  const medicalSystemValue = form.watch("medicalSystem");
   const debouncedDiagnosis = useDebounce(diagnosisValue, 300);
 
   React.useEffect(() => {
     async function fetchSuggestions() {
-      if (debouncedDiagnosis && debouncedDiagnosis.length >= 3) {
+      if (debouncedDiagnosis && debouncedDiagnosis.length >= 3 && medicalSystemValue) {
         setIsSuggestionLoading(true);
-        const result = await getDiagnosisSuggestions(debouncedDiagnosis);
+        const result = await getDiagnosisSuggestions(debouncedDiagnosis, medicalSystemValue);
         setSuggestions(result.suggestions);
         setIsSuggestionLoading(false);
         if(result.suggestions.length > 0) {
@@ -82,14 +83,14 @@ export function DiagnosisForm({ onSubmit, isSubmitting }: DiagnosisFormProps) {
       }
     }
     fetchSuggestions();
-  }, [debouncedDiagnosis]);
+  }, [debouncedDiagnosis, medicalSystemValue]);
 
   return (
     <Card>
       <CardHeader>
         <CardTitle>Diagnosis Code Mapper</CardTitle>
         <CardDescription>
-          Enter patient and diagnosis information to get AI-powered code suggestions.
+          Enter patient and diagnosis information to get code suggestions.
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -178,7 +179,7 @@ export function DiagnosisForm({ onSubmit, isSubmitting }: DiagnosisFormProps) {
                     </PopoverContent>
                   </Popover>
                   <FormDescription>
-                    AI will suggest terms as you type (min 3 chars).
+                    Suggestions will appear as you type (min 3 chars).
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
