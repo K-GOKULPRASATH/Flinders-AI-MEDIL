@@ -14,7 +14,7 @@ import {z} from 'genkit';
 
 const SuggestRecommendationsInputSchema = z.object({
   diagnosis: z.string().describe('The diagnosis in the traditional medical system.'),
-  medicalSystem: z.enum(['Ayurveda', 'Unani', 'Siddha', 'ICD']).describe('The traditional medical system the diagnosis belongs to.'),
+  medicalSystem: z.enum(['Ayurveda', 'Unani', 'Siddha', 'Homeopathy', 'ICD']).describe('The traditional medical system the diagnosis belongs to.'),
 });
 export type SuggestRecommendationsInput = z.infer<typeof SuggestRecommendationsInputSchema>;
 
@@ -33,7 +33,7 @@ const prompt = ai.definePrompt({
   name: 'suggestRecommendationsPrompt',
   input: {schema: SuggestRecommendationsInputSchema},
   output: {schema: SuggestRecommendationsOutputSchema},
-  prompt: `You are an expert in traditional medicine systems such as Ayurveda, Unani, and Siddha.
+  prompt: `You are an expert in traditional medicine systems such as Ayurveda, Unani, Siddha, and Homeopathy.
 Given a diagnosis in a specific traditional medical system, provide detailed and practical recommendations in the following categories:
 
 1.  Lifestyle: Suggest specific lifestyle adjustments that can help manage the condition.

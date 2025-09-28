@@ -32,7 +32,7 @@ import { Loader2, Search } from "lucide-react";
 
 export const diagnosisFormSchema = z.object({
   patientId: z.string().min(1, "Patient ID is required."),
-  medicalSystem: z.enum(["Ayurveda", "Unani", "Siddha", "ICD"], {
+  medicalSystem: z.enum(["Ayurveda", "Unani", "Siddha", "Homeopathy", "ICD"], {
     required_error: "You need to select a medical system.",
   }),
   diagnosis: z.string().min(3, "Diagnosis must be at least 3 characters."),
@@ -95,6 +95,7 @@ export function DiagnosisForm({ onSubmit, isSubmitting }: DiagnosisFormProps) {
                         <SelectItem value="Ayurveda">Ayurveda</SelectItem>
                         <SelectItem value="Unani">Unani</SelectItem>
                         <SelectItem value="Siddha">Siddha</SelectItem>
+                        <SelectItem value="Homeopathy">Homeopathy</SelectItem>
                         <SelectItem value="ICD">ICD (Modern)</SelectItem>
                       </SelectContent>
                     </Select>
