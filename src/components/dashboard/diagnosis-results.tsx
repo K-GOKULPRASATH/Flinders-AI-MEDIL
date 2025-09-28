@@ -10,6 +10,14 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { IcdCodeResults, DiagnosisFormValues } from "@/lib/types";
@@ -120,6 +128,33 @@ ${results.therapeuticRecommendations}
                 onCopy={() => handleCopyToClipboard(results.tm2Code, 'TM2 Code')}
             />
         </div>
+
+        <Card>
+          <Table>
+            <TableBody>
+              <TableRow>
+                <TableHead className="w-[180px]">Original Diagnosis</TableHead>
+                <TableCell className="font-medium">{results.originalDiagnosis}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableHead>ICD Name</TableHead>
+                <TableCell>{results.mmsDescription}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableHead>ICD Code</TableHead>
+                <TableCell>{results.mmsCode}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableHead>TM2 Name</TableHead>
+                <TableCell>{results.tm2Description}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableHead>TM2 Code</TableHead>
+                <TableCell>{results.tm2Code}</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </Card>
         
         <Tabs defaultValue="description">
           <TabsList className="grid w-full grid-cols-2">
