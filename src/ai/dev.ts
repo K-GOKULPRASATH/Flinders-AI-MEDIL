@@ -1,4 +1,5 @@
 import { config } from 'dotenv';
 config();
 
-import '@/ai/flows/suggest-icd-codes.flow.ts';
+// Anthropic AI setup is handled via environment variables
+// No additional dev setup needed

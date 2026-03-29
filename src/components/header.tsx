@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useAuth } from "@/context/auth-provider";
 import {
   DropdownMenu,
@@ -10,18 +12,43 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { User, LogOut } from "lucide-react";
+import { User, LogOut, MessageCircle, LayoutDashboard } from "lucide-react";
 import { AppLogo } from "@/components/icons";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 export function Header() {
   const { logout } = useAuth();
+  const pathname = usePathname();
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-card shadow-sm">
       <div className="container flex h-16 items-center justify-between px-4">
-        <div className="flex items-center gap-3">
-          <AppLogo />
-          <h1 className="text-xl font-bold tracking-tight">MediLexicon Assistant</h1>
+        <div className="flex items-center gap-6">
+          <div className="flex items-center gap-3">
+            <AppLogo />
+            <h1 className="text-xl font-bold tracking-tight">MediLexicon Assistant</h1>
+          </div>
+          <nav className="flex items-center gap-1">
+            <Link href="/">
+              <Button
+                variant={pathname === "/" ? "secondary" : "ghost"}
+                size="sm"
+                className="gap-2"
+              >
+                <LayoutDashboard className="h-4 w-4" />
+                Dashboard
+              </Button>
+            </Link>
+            <Link href="/chat">
+              <Button
+                variant={pathname === "/chat" ? "secondary" : "ghost"}
+                size="sm"
+                className="gap-2"
+              >
+                <MessageCircle className="h-4 w-4" />
+                Chat
+              </Button>
+            </Link>
+          </nav>
         </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -51,3 +78,4 @@ export function Header() {
     </header>
   );
 }
+
